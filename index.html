@@ -1,0 +1,159 @@
+<!DOCTYPE html>
+<meta charset= utf-8>
+<html>
+<head>
+
+    <title>Calculadora da Inflação Maranhense</title>
+
+</head>
+
+<body>
+    <div class="container">
+        <img src="https://imesc.ma.gov.br/src/img/govMA.png" id="logo" width="250" height="100" style="position:relative;top:-20px">
+        <img src="https://imesc.ma.gov.br/src/img/logo1-novo.png" id="logo2" width="120" height="80" style="position:relative;top:-20px;left:15px">
+        <h1>Calculadora da Inflação Maranhense</h1>
+        
+        <label for="valor">Digite o valor em reais:</label>
+        <input type="text" id="valor" oninput="formatCurrency(this)">
+        <label for="data" class="input-label">Selecione um mês e ano:</label>
+        <input type="month" id="data" name="data" class="input-date">
+        <input type="month" id="data2" name="data2" class="input-date">
+        <button onclick="calcular()">Calcular</button>
+        <div class="result" id="resultado"></div>
+        <h6>*Atualizado com dados de 2013-01 à 2023-04.</h6>
+    </div>
+
+</body>
+</html>
+<script>
+        
+    var inflatio = [
+    {"2013-01":1.01},{"2013-02":1.01},{"2013-03":1.01},{"2013-04":1.01},{"2013-05":1.01},{"2013-06":1.01},{"2013-07":1.01},{"2013-08":1.01},{"2013-09":1.01},{"2013-10":1.01},{"2013-11":1.01},{"2013-12":1.01},
+    {"2014-01":1.01},{"2014-02":1.01},{"2014-03":1.01},{"2014-04":1.01},{"2014-05":1.01},{"2014-06":1.01},{"2014-07":1.01},{"2014-08":1.01},{"2014-09":1.01},{"2014-10":1.01},{"2014-11":1.01},{"2014-12":1.01},
+    {"2015-01":1.01},{"2015-02":1.01},{"2015-03":1.01},{"2015-04":1.01},{"2015-05":1.01},{"2015-06":1.01},{"2019-07":1.01},{"2015-08":1.01},{"2015-09":1.01},{"2015-10":1.01},{"2015-11":1.01},{"2015-12":1.01},
+    {"2016-01":1.01},{"2016-02":1.01},{"2016-03":1.01},{"2016-04":1.01},{"2016-05":1.01},{"2016-06":1.01},{"2019-07":1.01},{"2016-08":1.01},{"2016-09":1.01},{"2016-10":1.01},{"2016-11":1.01},{"2016-12":1.01},
+    {"2017-01":1.01},{"2017-02":1.01},{"2017-03":1.01},{"2017-04":1.01},{"2017-05":1.01},{"2017-06":1.01},{"2019-07":1.01},{"2017-08":1.01},{"2017-09":1.01},{"2017-10":1.01},{"2017-11":1.01},{"2017-12":1.01},
+    {"2018-01":1.01},{"2018-02":1.01},{"2018-03":1.01},{"2018-04":1.01},{"2018-05":1.01},{"2018-06":1.01},{"2019-07":1.01},{"2018-08":1.01},{"2018-09":1.01},{"2018-10":1.01},{"2018-11":1.01},{"2018-12":1.01},
+    {"2019-01":1.01},{"2019-02":1.01},{"2019-03":1.01},{"2019-04":1.01},{"2019-05":1.01},{"2019-06":1.01},{"2019-07":1.01},{"2019-08":1.01},{"2019-09":1.01},{"2019-10":1.01},{"2019-11":1.01},{"2019-12":1.01},
+    {"2020-01":1.01},{"2020-02":1.01},{"2020-03":1.01},{"2020-04":1.01},{"2020-05":1.01},{"2020-06":1.01},{"2020-07":1.01},{"2020-08":1.01},{"2020-09":1.01},{"2020-10":1.01},{"2020-11":1.01},{"2020-12":1.01},
+    {"2021-01":1.01},{"2021-02":1.01},{"2021-03":1.01},{"2021-04":1.01},{"2021-05":1.01},{"2021-06":1.01},{"2021-07":1.01},{"2021-08":1.01},{"2021-09":1.01},{"2021-10":1.01},{"2021-11":1.01},{"2021-12":1.01},
+    {"2022-01":1.01},{"2022-02":1.01},{"2022-03":1.01},{"2022-04":1.01},{"2022-05":1.01},{"2022-06":1.01},{"2022-07":1.01},{"2022-08":1.01},{"2022-09":1.01},{"2022-10":1.01},{"2022-11":1.01},{"2022-12":1.01},
+    {"2023-01":1.01},{"2023-02":1.01},{"2023-03":1.01},{"2023-04":1.01},{"2023-05":1.01},{"2023-06":1.01},{"2023-07":1.01},{"2023-08":1.01},{"2023-09":1.01},{"2023-10":1.01},{"2023-11":1.01},{"2023-12":1.01}]
+    function calcular(){
+        var numero = document.getElementById("valor").value.toString()
+        if(numero!=""){
+        var x= numero.substring(3).replaceAll(".","")
+        var x= x.replaceAll(",",".")
+        var valor = parseFloat(x);
+        var inicio=document.getElementById("data").value
+        var fim=document.getElementById("data2").value
+        if(inicio<fim){
+        var valores=[]
+        inflatio.map(function(nome, i) {if(Object.keys(nome)[0]>=inicio && Object.keys(nome)[0]<=fim){valores.push(Object.values(nome)[0]);}});
+        let inflatioAcum=1
+        valores.forEach((a)=>inflatioAcum*=a);
+        var resultado = valor * inflatioAcum; // taxa de inflação de 10%
+        document.getElementById("resultado").innerHTML = "Valor reajustado: R$" + resultado.toFixed(2).toLocaleString('pt-BR', { style: 'currency', currency: 'BRL' });}
+        else{document.getElementById("resultado").innerHTML ="A data de inicio deve ser anterior à data final. "}
+        }else{document.getElementById("resultado").innerHTML ="Insira o valor a ser reajustado."}
+    }
+
+    function formatCurrency(input) {
+        // Obtém o valor atual do input
+        let value = input.value;
+        // Remove tudo que não for um número
+        value = value.replace(/\D/g, '');
+        // Divide o valor por 100 para obter o valor em reais
+        value = Number(value) / 100;
+        // Formata o valor para o formato de moeda brasileira
+        value = value.toLocaleString('pt-BR', { style: 'currency', currency: 'BRL' });
+        // Atualiza o valor do input com o valor formatado
+        input.value = value;
+    }
+
+</script>
+<style>
+    body {
+        font-family: Arial, sans-serif;
+        background-color: #022c50e7;
+    }
+
+    .container {
+        margin: 10px auto;
+        max-width: 400px;
+        background-color: #fff;
+        padding: 80px 50px 10px 50px;
+        box-shadow: 0px 2px 5px rgba(107, 103, 103, 0.3);
+        border-radius: 5px;
+    }
+
+    h1 {
+        text-align: center;
+        font-size: 30px;
+        margin: 0 0 20px 0;
+    }
+
+    label {
+        font-size: 20px;
+        margin-bottom: 10px;
+        display: block;
+    }
+
+    input[type="text"] {
+        padding: 10px;
+        margin-bottom: 20px;
+        border-radius: 5px;
+        border: 1px solid #ccc;
+        width: 100%;
+        box-sizing: border-box;
+        font-size: 15px;
+    }
+
+    button {
+        background-color: #008CBA;
+        color: #fff;
+        border: none;
+        padding: 10px 20px;
+        border-radius: 5px;
+        cursor: pointer;
+        transition: background-color 0.3s ease;
+        width: 100%;
+        box-sizing: border-box;
+        font-size: 20px;
+        margin-top: 10px;
+    }
+
+    button:hover {
+        background-color: #00698C;
+    }
+
+    .result {
+        padding: 20px;
+        border-radius: 5px;
+        border: 1px solid #ccc;
+        width: 100%;
+        box-sizing: border-box;
+        text-align: center;
+        font-size: 28px;
+        font-weight: bold;
+        margin-top: 30px;
+    }
+    .input-label {
+display: block;
+font-weight: bold;
+margin-bottom: 10px;
+}
+
+.input-date {
+padding: 10px;
+border-radius: 5px;
+border: 1px solid #ccc;
+font-size: 12px;
+width:43%;
+}
+#data2{
+position:relative;
+
+}
+
+</style>
