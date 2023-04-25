@@ -16,8 +16,8 @@
         <label for="valor">Digite o valor em reais:</label>
         <input type="text" id="valor" placeholder="R$ 0.00" oninput="formatCurrency(this)" >
         <label for="data" class="input-label">Selecione um mês e ano:</label>
-        <input type="month" id="data" name="data" class="input-date">
-        <input type="month" id="data2" name="data2" class="input-date">
+        <input type="month" id="data" name="data" class="input-date" min="2020-01-01" max="2023-03-01">
+        <input type="month" id="data2" name="data2" class="input-date" min="2020-01-01" max="2023-03-01">
         <button onclick="calcular()">Calcular</button>
         <div class="result" id="resultado"></div>
         <h6>*Atualizado com dados de 2020-01 à 2023-03.</h6>
